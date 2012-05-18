@@ -4,6 +4,11 @@
 
 #include "ScriptPCH.h"
 
+enum Encounter
+{
+	BOSS_ZORK
+};
+
 enum Spells
 {
     SPELL_STRIKE				= 109211,
@@ -29,6 +34,7 @@ public:
 
     struct boss_zorkAI : public BossAI
     {
+		boss_zorkAI(Creature* creature) : BossAI(creature, BOSS_ZORK) {}
 
         bool enraged;
 
@@ -53,7 +59,7 @@ public:
                 switch (eventId)
                 {
                     case EVENT_FRENZY:
-						DoCast(me, SPELL_FRENZY), true);
+						DoCast(me, SPELL_FRENZY, true);
                         events.ScheduleEvent(EVENT_FRENZY, 16000);
                         break;
                     case EVENT_STRIKE:
