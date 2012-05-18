@@ -4,6 +4,12 @@
 
 #include "ScriptPCH.h"
 
+enum Yells
+{
+	SAY_FRENZY					= -1533034,
+	SAY_AGGRO					= -1533029
+};
+
 enum Encounter
 {
 	BOSS_ZORK
@@ -41,6 +47,7 @@ public:
         void EnterCombat(Unit* /*who*/)
         {
             _EnterCombat();
+			DoScriptText(SAY_AGGRO, me);
             enraged = false;
             events.ScheduleEvent(EVENT_FRENZY, 16000);
             events.ScheduleEvent(EVENT_STRIKE, 20000);
@@ -60,6 +67,7 @@ public:
                 {
                     case EVENT_FRENZY:
 						DoCast(me, SPELL_FRENZY, true);
+						DoScriptText(SAY_FRENZY, me);
                         events.ScheduleEvent(EVENT_FRENZY, 16000);
                         break;
                     case EVENT_STRIKE:
